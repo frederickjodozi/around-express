@@ -11,21 +11,21 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "npx eslint ."
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Fred776/around-express.git"
+  "dependencies": {
+    "express": "^4.17.3"
   },
-  "bugs": {
-    "url": "https://github.com/Fred776/around-express/issues"
-  },
-  "homepage": "https://github.com/Fred776/around-express#readme",
   "devDependencies": {
     "eslint": "^8.10.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.25.4",
     "nodemon": "^2.0.15"
   },
-  "dependencies": {
-    "express": "^4.17.3"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Fred776/around-express.git"
+  },
+  "homepage": "https://github.com/Fred776/around-express#readme",
+  "bugs": {
+    "url": "https://github.com/Fred776/around-express/issues"
   }
 }

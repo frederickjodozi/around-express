@@ -3,7 +3,7 @@ const USERS_PATH = path.join(__dirname, '../data/users.json')
 const fs = require('fs').promises;
 
 const getUser = (req, res) => {
-  fs.readFile(USERS_PATH, { encoding: 'utf8' })
+  fs.readFile(USERS_PATH, 'utf8')
     .then(data => {
       const { id } = req.params;
       const userData = JSON.parse(data);
@@ -16,7 +16,7 @@ const getUser = (req, res) => {
 }
 
 const getUsers = (req, res) => {
-  fs.readFile(USERS_PATH, { encoding: 'utf8' })
+  fs.readFile(USERS_PATH, 'utf8')
     .then(data => {
       const usersData = JSON.parse(data);
       res.send(usersData);

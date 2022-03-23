@@ -15,7 +15,13 @@ const userSchema = new mongoose.Schema({
   },
   avatar: {
     type: String,
-    required: true
+    validate: {
+      validator: v => {
+        return /https?:\/\/w{0,3}\.?.*/.test(v);
+      },
+      message: 'The Avatar image must a valid URL'
+    },
+    required: true,
   }
 });
 

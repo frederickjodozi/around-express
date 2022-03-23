@@ -8,16 +8,28 @@ const cardSchema = new mongoose.Schema({
     required: true
   },
   link: {
-
+    type: String,
+    validate: {
+      validator: v => {
+        return /https?:\/\/w{0,3}\.?.*/.test(v);
+      },
+      message: 'The Card image must a valid URL'
+    },
+    required: true
   },
   owner: {
-
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'user',
+    required: true
   },
   likes: {
-
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'user',
+    default: []
   },
-  createAt: {
-
+  createdAt: {
+    type: Date,
+    default: Date.now()
   }
 });
 

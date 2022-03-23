@@ -1,13 +1,10 @@
-const path = require('path');
-const USERS_PATH = path.join(__dirname, '../data/users.json');
-const readFile = require('../helpers/index');
+const User = require('../models/user');
 
 const getUser = (req, res) => {
-  readFile(USERS_PATH)
-    .then(data => {
-      const { id } = req.params;
-      const user = data.find(user => user._id === id);
+  const { id } = req.params;
 
+  User.findById(id)
+    .then(user => {
       if(!user) res.status(404).send({ errorMessage: "User ID not found" });
       else res.send(user);
     })
@@ -15,9 +12,17 @@ const getUser = (req, res) => {
 }
 
 const getUsers = (req, res) => {
-  readFile(USERS_PATH)
+  User.find({})
     .then(data => res.send(data))
     .catch(() => res.status(500).send({ Message: 'An error as occured on the server' }));
 }
 
-module.exports = { getUser, getUsers }
+const createUser = (req, res) => {
+  const { name, about, avatar } = req.body;
+
+  User.create({ name, about, avatar })
+    .then(data => res.send(data))
+    .catch(() => res.status(500).send({ Message: 'An error as occured on the server' }));
+}
+
+module.exports = { getUser, getUsers, createUser }

@@ -4,17 +4,36 @@ const getUser = (req, res) => {
   const { id } = req.params;
 
   User.findById(id)
-    .then(user => {
-      if(!user) res.status(404).send({ errorMessage: "User ID not found" });
-      else res.send(user);
+    .orFail(() => {
+      const err = new Error('The resource couldn\'t be found');
+      err.name = "UnavailableResource";
+      throw err;
     })
-    .catch(() => res.status(500).send({ errorMessage: 'An error as occured on the server' }));
+    .then(user => res.send(user))
+    .catch((err) => {
+      if(err.name === "UnavailableResource") {
+        res.status(404).send({ Error: `${ err.message }` });
+      } else {
+        res.status(500).send({ Error: 'An error as occured on the server' });
+      }
+    });
 }
 
 const getUsers = (req, res) => {
   User.find({})
-    .then(data => res.send(data))
-    .catch(() => res.status(500).send({ Message: 'An error as occured on the server' }));
+    .orFail(() => {
+      const err = new Error('The resource couldn\'t be found');
+      err.name = "UnavailableResource";
+      throw err;
+    })
+    .then(users => res.send(users))
+    .catch((err) => {
+      if(err.name === "UnavailableResource") {
+        res.status(400).send({ Error: `${ err.message }` });
+      } else {
+        res.status(500).send({ Error: 'An error as occured on the server' });
+      }
+    });
 }
 
 const createUser = (req, res) => {
@@ -22,7 +41,13 @@ const createUser = (req, res) => {
 
   User.create({ name, about, avatar })
     .then(data => res.send(data))
-    .catch(() => res.status(500).send({ Message: 'An error as occured on the server' }));
+    .catch((err) => {
+      if(err.name === 'ValidationError') {
+        res.status(400).send({ Error: `${ err.name }` });
+      } else {
+        res.status(500).send({ Error: 'An error as occured on the server' });
+      }
+    });
 }
 
 module.exports = { getUser, getUsers, createUser }

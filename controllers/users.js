@@ -50,4 +50,32 @@ const createUser = (req, res) => {
     });
 }
 
-module.exports = { getUser, getUsers, createUser }
+const updateUser = (req, res) => {
+  const { name, about } = req.body;
+
+  User.updateOne({ name, about })
+    .then(data => res.send(data))
+    .catch((err) => {
+      if(err.name === 'ValidationError') {
+        res.status(400).send({ Error: `${ err.name }` });
+      } else {
+        res.status(500).send({ Error: 'An error as occured on the server' });
+      }
+    });
+}
+
+const updateAvatar = (req, res) => {
+  const { avatar } = req.body;
+
+  User.updateOne({ avatar })
+    .then(data => res.send(data))
+    .catch((err) => {
+      if(err.name === 'ValidationError') {
+        res.status(400).send({ Error: `${ err.name }` });
+      } else {
+        res.status(500).send({ Error: 'An error as occured on the server' });
+      }
+    });
+}
+
+module.exports = { getUser, getUsers, createUser, updateUser, updateAvatar }

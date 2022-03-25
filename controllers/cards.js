@@ -56,7 +56,15 @@ const likeCard = (req, res) => {
     req.params.cardId,
     { $addToSet: { likes: req.user._id } },
     { new: true }
-  );
+  )
+  .then(card => res.send(card))
+  .catch((err) => {
+    if(err.name === "UnavailableResource") {
+      res.status(404).send({ Error: `${ err.message }` });
+    } else {
+      res.status(500).send({ Error: 'An error as occured on the server' });
+    }
+  });
 }
 
 const dislikeCard = (req, res) => {
@@ -64,7 +72,15 @@ const dislikeCard = (req, res) => {
     req.params.cardId,
     { $pull: { likes: req.user._id } },
     { new: true }
-  );
+  )
+  .then(card => res.send(card))
+  .catch((err) => {
+    if(err.name === "UnavailableResource") {
+      res.status(404).send({ Error: `${ err.message }` });
+    } else {
+      res.status(500).send({ Error: 'An error as occured on the server' });
+    }
+  });
 }
 
 module.exports = { getCards, createCard, deleteCard, likeCard, dislikeCard };

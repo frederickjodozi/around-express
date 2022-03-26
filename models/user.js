@@ -5,24 +5,24 @@ const userSchema = new mongoose.Schema({
     type: String,
     minlength: 2,
     maxlength: 30,
-    required: true
+    required: true,
   },
   about: {
     type: String,
     minlength: 2,
     maxlength: 30,
-    required: true
+    required: true,
   },
   avatar: {
     type: String,
     validate: {
-      validator: v => {
+      validator: (v) => {
         return /https?:\/\/w{0,3}\.?.*/.test(v);
       },
-      message: 'The Avatar image must a valid URL'
+      message: 'The Avatar image must a valid URL',
     },
     required: true,
-  }
+  },
 });
 
 module.exports = mongoose.model('user', userSchema);

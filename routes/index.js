@@ -7,8 +7,7 @@ router.use('/users', userRouter);
 router.use('/cards', cardsRouter);
 
 router.use((req, res) => {
-  res.status(404).send({ errorMessage: 'Requested resource not found'});
+  res.status(404).send({ errorMessage: 'Requested resource not found' });
 });
 
 module.exports = router;
-

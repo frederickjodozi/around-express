@@ -5,22 +5,22 @@ const cardSchema = new mongoose.Schema({
     type: String,
     minlength: 2,
     maxlength: 30,
-    required: true
+    required: true,
   },
   link: {
     type: String,
     validate: {
-      validator: v => {
+      validator: (v) => {
         return /https?:\/\/w{0,3}\.?.*/.test(v);
       },
-      message: 'The Card image must a valid URL'
+      message: 'The Card image must a valid URL',
     },
-    required: true
+    required: true,
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'user',
-    required: true
+    required: true,
   },
   likes: {
     type: mongoose.Schema.Types.ObjectId,
@@ -29,7 +29,7 @@ const cardSchema = new mongoose.Schema({
   createdAt: {
     type: Date,
     default: Date.now(),
-  }
+  },
 });
 
 module.exports = mongoose.model('card', cardSchema);

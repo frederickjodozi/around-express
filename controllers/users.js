@@ -13,28 +13,17 @@ const getUser = (req, res) => {
     .then((user) => res.send(user))
     .catch((err) => {
       if (err.name === 'UnavailableResource') {
-        res.status(ERROR_CODE_404).send({ Error: `${err.message}` });
+        res.status(ERROR_CODE_400).send({ Error: `${err.message}` });
       } else {
-        res.status(ERROR_CODE_500).send({ Error: 'An error as occured on the server' });
+        res.status(ERROR_CODE_500).send({ Error: 'An error has occured on the server' });
       }
     });
 };
 
 const getUsers = (req, res) => {
   User.find({})
-    .orFail(() => {
-      const err = new Error('The resource couldn\'t be found');
-      err.name = 'UnavailableResource';
-      throw err;
-    })
     .then((users) => res.send(users))
-    .catch((err) => {
-      if (err.name === 'UnavailableResource') {
-        res.status(ERROR_CODE_400).send({ Error: `${err.message}` });
-      } else {
-        res.status(ERROR_CODE_500).send({ Error: 'An error as occured on the server' });
-      }
-    });
+    .catch(() => res.status(ERROR_CODE_500).send({ Error: 'An error has occured on the server' }));
 };
 
 const createUser = (req, res) => {
@@ -46,7 +35,7 @@ const createUser = (req, res) => {
       if (err.name === 'ValidationError') {
         res.status(ERROR_CODE_400).send({ Error: `${err.name}` });
       } else {
-        res.status(ERROR_CODE_500).send({ Error: 'An error as occured on the server' });
+        res.status(ERROR_CODE_500).send({ Error: 'An error has occured on the server' });
       }
     });
 };
@@ -60,7 +49,7 @@ const updateUser = (req, res) => {
       if (err.name === 'ValidationError') {
         res.status(ERROR_CODE_400).send({ Error: `${err.name}` });
       } else {
-        res.status(ERROR_CODE_500).send({ Error: 'An error as occured on the server' });
+        res.status(ERROR_CODE_500).send({ Error: 'An error has occured on the server' });
       }
     });
 };
@@ -74,7 +63,7 @@ const updateAvatar = (req, res) => {
       if (err.name === 'ValidationError') {
         res.status(ERROR_CODE_400).send({ Error: `${err.name}` });
       } else {
-        res.status(ERROR_CODE_500).send({ Error: 'An error as occured on the server' });
+        res.status(ERROR_CODE_500).send({ Error: 'An error has occured on the server' });
       }
     });
 };

@@ -36,10 +36,10 @@ const createUser = (req, res) => {
 };
 
 const updateUser = (req, res) => {
-  const id = req.user._id;
+  const userId = req.user._id;
   const { name, about } = req.body;
 
-  User.findByIdAndUpdate(id, { name, about })
+  User.findByIdAndUpdate(userId, { name, about })
     .then((data) => res.send(data))
     .catch((err) => {
       if (err.name === 'ValidationError') {
@@ -53,10 +53,10 @@ const updateUser = (req, res) => {
 };
 
 const updateAvatar = (req, res) => {
-  const id = req.user._id;
+  const userId = req.user._id;
   const { avatar } = req.body;
 
-  User.findByIdAndUpdate(id, { avatar })
+  User.findByIdAndUpdate(userId, { avatar })
     .then((data) => res.send(data))
     .catch((err) => {
       if (err.name === 'ValidationError') {

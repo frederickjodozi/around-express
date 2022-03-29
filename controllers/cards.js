@@ -3,19 +3,8 @@ const { ERROR_CODE_400, ERROR_CODE_404, ERROR_CODE_500, } = require('../utils/er
 
 const getCards = (req, res) => {
   Card.find({})
-    .orFail(() => {
-      const err = new Error('The resource couldn\'t be found');
-      err.name = 'UnavailableResource';
-      throw err;
-    })
     .then((cards) => res.send(cards))
-    .catch((err) => {
-      if (err.name === 'UnavailableResource') {
-        res.status(ERROR_CODE_404).send({ Error: `${err.message}` });
-      } else {
-        res.status(ERROR_CODE_500).send({ Error: 'An error as occured on the server' });
-      }
-    });
+    .catch(() => res.status(ERROR_CODE_500).send({ Error: 'An error as occured on the server' }));
 };
 
 const createCard = (req, res) => {
@@ -34,20 +23,17 @@ const createCard = (req, res) => {
 };
 
 const deleteCard = (req, res) => {
-  const { id } = req.body;
+  const { cardId } = req.parms.cardId
 
-  Card.deleteOne(id)
-    .orFail(() => {
-      const err = new Error('The resource couldn\'t be found');
-      err.name = 'UnavailableResource';
-      throw err;
-    })
+  Card.findByIdAndDelete(cardId)
     .then((data) => res.send(data))
     .catch((err) => {
-      if (err.name === 'UnavailableResource') {
-        res.status(ERROR_CODE_404).send({ Error: `${err.message}` });
+      if (err.name === 'ValidationError') {
+        res.status(ERROR_CODE_400).send({ Error: `${err.name}` });
+      } else if (err.name === 'CastError') {
+        res.status(ERROR_CODE_404).send({ Error: `${err.name}` });
       } else {
-        res.status(ERROR_CODE_500).send({ Error: 'An error as occured on the server' });
+        res.status(ERROR_CODE_500).send({ Error: 'An error has occured on the server' });
       }
     });
 };
@@ -60,10 +46,12 @@ const likeCard = (req, res) => {
   )
   .then((card) => res.send(card))
   .catch((err) => {
-    if (err.name === 'UnavailableResource') {
-      res.status(ERROR_CODE_404).send({ Error: `${err.message}` });
+    if (err.name === 'ValidationError') {
+      res.status(ERROR_CODE_400).send({ Error: `${err.name}` });
+    } else if (err.name === 'CastError') {
+      res.status(ERROR_CODE_404).send({ Error: `${err.name}` });
     } else {
-      res.status(ERROR_CODE_500).send({ Error: 'An error as occured on the server' });
+      res.status(ERROR_CODE_500).send({ Error: 'An error has occured on the server' });
     }
   });
 };
@@ -76,10 +64,12 @@ const dislikeCard = (req, res) => {
   )
   .then((card) => res.send(card))
   .catch((err) => {
-    if (err.name === 'UnavailableResource') {
-      res.status(ERROR_CODE_404).send({ Error: `${err.message}` });
+    if (err.name === 'ValidationError') {
+      res.status(ERROR_CODE_400).send({ Error: `${err.name}` });
+    } else if (err.name === 'CastError') {
+      res.status(ERROR_CODE_404).send({ Error: `${err.name}` });
     } else {
-      res.status(ERROR_CODE_500).send({ Error: 'An error as occured on the server' });
+      res.status(ERROR_CODE_500).send({ Error: 'An error has occured on the server' });
     }
   });
 };

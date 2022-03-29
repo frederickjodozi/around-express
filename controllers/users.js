@@ -5,15 +5,10 @@ const getUser = (req, res) => {
   const { id } = req.params;
 
   User.findById(id)
-    .orFail(() => {
-      const err = new Error('The resource couldn\'t be found');
-      err.name = 'UnavailableResource';
-      throw err;
-    })
     .then((user) => res.send(user))
     .catch((err) => {
-      if (err.name === 'UnavailableResource') {
-        res.status(ERROR_CODE_400).send({ Error: `${err.message}` });
+      if (err.name === 'CastError') {
+        res.status(ERROR_CODE_404).send({ Error: `${err.name}` });
       } else {
         res.status(ERROR_CODE_500).send({ Error: 'An error has occured on the server' });
       }
@@ -41,13 +36,16 @@ const createUser = (req, res) => {
 };
 
 const updateUser = (req, res) => {
+  const id = req.user._id;
   const { name, about } = req.body;
 
-  User.updateOne({ name, about })
+  User.findByIdAndUpdate(id, { name, about })
     .then((data) => res.send(data))
     .catch((err) => {
       if (err.name === 'ValidationError') {
         res.status(ERROR_CODE_400).send({ Error: `${err.name}` });
+      } else if (err.name === 'CastError') {
+        res.status(ERROR_CODE_404).send({ Error: `${err.name}` });
       } else {
         res.status(ERROR_CODE_500).send({ Error: 'An error has occured on the server' });
       }
@@ -55,13 +53,16 @@ const updateUser = (req, res) => {
 };
 
 const updateAvatar = (req, res) => {
+  const id = req.user._id;
   const { avatar } = req.body;
 
-  User.updateOne({ avatar })
+  User.findByIdAndUpdate(id, { avatar })
     .then((data) => res.send(data))
     .catch((err) => {
       if (err.name === 'ValidationError') {
         res.status(ERROR_CODE_400).send({ Error: `${err.name}` });
+      } else if (err.name === 'CastError') {
+        res.status(ERROR_CODE_404).send({ Error: `${err.name}` });
       } else {
         res.status(ERROR_CODE_500).send({ Error: 'An error has occured on the server' });
       }

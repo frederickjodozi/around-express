@@ -23,7 +23,7 @@ const createCard = (req, res) => {
 };
 
 const deleteCard = (req, res) => {
-  const { cardId } = req.parms.cardId
+  const { cardId } = req.params;
 
   Card.findByIdAndDelete(cardId)
     .then((data) => res.send(data))

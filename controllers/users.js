@@ -1,5 +1,5 @@
 const User = require('../models/user');
-const { ERROR_CODE_400, ERROR_CODE_404, ERROR_CODE_500, } = require('../utils/errorStatusCodes');
+const { ERROR_CODE_400, ERROR_CODE_404, ERROR_CODE_500 } = require('../utils/errorStatusCodes');
 
 const getUser = (req, res) => {
   const { id } = req.params;

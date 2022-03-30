@@ -4,7 +4,7 @@ const { ERROR_CODE_400, ERROR_CODE_404, ERROR_CODE_500, } = require('../utils/er
 const getCards = (req, res) => {
   Card.find({})
     .then((cards) => res.send(cards))
-    .catch(() => res.status(ERROR_CODE_500).send({ Error: 'An error as occured on the server' }));
+    .catch(() => res.status(ERROR_CODE_500).send({ Error: 'An error has occured on the server' }));
 };
 
 const createCard = (req, res) => {
@@ -17,7 +17,7 @@ const createCard = (req, res) => {
       if (err.name === 'ValidationError') {
         res.status(ERROR_CODE_400).send({ Error: `${err.name}` });
       } else {
-        res.status(ERROR_CODE_500).send({ Error: 'An error as occured on the server' });
+        res.status(ERROR_CODE_500).send({ Error: 'An error has occured on the server' });
       }
     });
 };

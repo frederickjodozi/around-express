@@ -9,13 +9,13 @@ const getCards = (req, res) => {
 
 const createCard = (req, res) => {
   const { name, link } = req.body;
-  const userId = req.user._id;
+  const { id } = req.user;
 
-  Card.create({ name, link, owner: userId })
+  Card.create({ name, link, owner: id })
     .then((card) => res.send(card))
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        res.status(ERROR_CODE_400).send({ Error: `${err.name}` });
+        res.status(ERROR_CODE_400).send({ Error: `${err}` });
       } else {
         res.status(ERROR_CODE_500).send({ Error: 'An error has occured on the server' });
       }
@@ -34,7 +34,7 @@ const deleteCard = (req, res) => {
     .then((data) => res.send(data))
     .catch((err) => {
       if (err.name === 'CastError') {
-        res.status(ERROR_CODE_400).send({ Error: `${err.name}` });
+        res.status(ERROR_CODE_400).send({ Error: `${err}` });
       } else if (err.statusCode === 404) {
         res.status(ERROR_CODE_404).send({ Error: `${err.message}` });
       } else {
@@ -59,7 +59,7 @@ const likeCard = (req, res) => {
     .then((card) => res.send(card))
     .catch((err) => {
       if (err.name === 'CastError') {
-        res.status(ERROR_CODE_400).send({ Error: `${err.name}` });
+        res.status(ERROR_CODE_400).send({ Error: `${err}` });
       } else if (err.statusCode === 404) {
         res.status(ERROR_CODE_404).send({ Error: `${err.message}` });
       } else {
@@ -84,7 +84,7 @@ const dislikeCard = (req, res) => {
     .then((card) => res.send(card))
     .catch((err) => {
       if (err.name === 'CastError') {
-        res.status(ERROR_CODE_400).send({ Error: `${err.name}` });
+        res.status(ERROR_CODE_400).send({ Error: `${err}` });
       } else if (err.statusCode === 404) {
         res.status(ERROR_CODE_404).send({ Error: `${err.message}` });
       } else {

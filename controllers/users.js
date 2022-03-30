@@ -5,10 +5,17 @@ const getUser = (req, res) => {
   const { id } = req.params;
 
   User.findById(id)
+    .orFail(() => {
+      const error = new Error('No user found with specified Id');
+      error.statusCode = 404;
+      throw error;
+    })
     .then((user) => res.send(user))
     .catch((err) => {
       if (err.name === 'CastError') {
-        res.status(ERROR_CODE_404).send({ Error: `${err.name}` });
+        res.status(ERROR_CODE_400).send({ Error: `${err.name}` });
+      } else if (err.statusCode === 404) {
+        res.status(ERROR_CODE_404).send({ Error: `${err.message}` });
       } else {
         res.status(ERROR_CODE_500).send({ Error: 'An error has occured on the server' });
       }
@@ -40,12 +47,17 @@ const updateUser = (req, res) => {
   const { name, about } = req.body;
 
   User.findByIdAndUpdate(userId, { name, about })
+    .orFail(() => {
+      const error = new Error('No user found with specified Id');
+      error.statusCode = 404;
+      throw error;
+    })
     .then((data) => res.send(data))
     .catch((err) => {
-      if (err.name === 'ValidationError') {
+      if (err.name === 'CastError') {
         res.status(ERROR_CODE_400).send({ Error: `${err.name}` });
-      } else if (err.name === 'CastError') {
-        res.status(ERROR_CODE_404).send({ Error: `${err.name}` });
+      } else if (err.statusCode === 404) {
+        res.status(ERROR_CODE_404).send({ Error: `${err.message}` });
       } else {
         res.status(ERROR_CODE_500).send({ Error: 'An error has occured on the server' });
       }
@@ -57,12 +69,17 @@ const updateAvatar = (req, res) => {
   const { avatar } = req.body;
 
   User.findByIdAndUpdate(userId, { avatar })
+    .orFail(() => {
+      const error = new Error('No user found with specified Id');
+      error.statusCode = 404;
+      throw error;
+    })
     .then((data) => res.send(data))
     .catch((err) => {
-      if (err.name === 'ValidationError') {
+      if (err.name === 'CastError') {
         res.status(ERROR_CODE_400).send({ Error: `${err.name}` });
-      } else if (err.name === 'CastError') {
-        res.status(ERROR_CODE_404).send({ Error: `${err.name}` });
+      } else if (err.statusCode === 404) {
+        res.status(ERROR_CODE_404).send({ Error: `${err.message}` });
       } else {
         res.status(ERROR_CODE_500).send({ Error: 'An error has occured on the server' });
       }

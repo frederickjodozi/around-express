@@ -23,9 +23,9 @@ const createCard = (req, res) => {
 };
 
 const deleteCard = (req, res) => {
-  const { cardId } = req.params;
+  const { id } = req.params;
 
-  Card.findByIdAndDelete(cardId)
+  Card.findByIdAndDelete(id)
     .orFail(() => {
       const error = new Error('No card found with specified Id');
       error.statusCode = 404;
@@ -44,8 +44,10 @@ const deleteCard = (req, res) => {
 };
 
 const likeCard = (req, res) => {
+  const { id } = req.params;
+
   Card.findByIdAndUpdate(
-    req.params.cardId,
+    id,
     { $addToSet: { likes: req.user._id } },
     { new: true },
   )
@@ -67,8 +69,10 @@ const likeCard = (req, res) => {
 };
 
 const dislikeCard = (req, res) => {
+  const { id } = req.params;
+
   Card.findByIdAndUpdate(
-    req.params.cardId,
+    id,
     { $pull: { likes: req.user._id } },
     { new: true },
   )

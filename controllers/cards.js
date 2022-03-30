@@ -1,5 +1,5 @@
 const Card = require('../models/card');
-const { ERROR_CODE_400, ERROR_CODE_404, ERROR_CODE_500, } = require('../utils/errorStatusCodes');
+const { ERROR_CODE_400, ERROR_CODE_404, ERROR_CODE_500 } = require('../utils/errorStatusCodes');
 
 const getCards = (req, res) => {
   Card.find({})
@@ -95,4 +95,4 @@ module.exports = {
   deleteCard,
   likeCard,
   dislikeCard,
- };
+};

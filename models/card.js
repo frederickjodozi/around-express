@@ -11,7 +11,9 @@ const cardSchema = new mongoose.Schema({
   link: {
     type: String,
     validate: {
-      validator: (v) => validator.isUrl(v),
+      validator(link) {
+        return validator.isURL(link);
+      },
       message: 'The Card image must a valid URL',
     },
     required: true,

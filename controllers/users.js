@@ -13,7 +13,7 @@ const getUser = (req, res) => {
     .then((user) => res.send(user))
     .catch((err) => {
       if (err.name === 'CastError') {
-        res.status(ERROR_CODE_400).send({ Error: `${err}` });
+        res.status(ERROR_CODE_400).send({ Error: `${err.message}` });
       } else if (err.statusCode === 404) {
         res.status(ERROR_CODE_404).send({ Error: `${err.message}` });
       } else {
@@ -35,7 +35,7 @@ const createUser = (req, res) => {
     .then((data) => res.send(data))
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        res.status(ERROR_CODE_400).send({ Error: `${err}` });
+        res.status(ERROR_CODE_400).send({ Error: `${err.message}` });
       } else {
         res.status(ERROR_CODE_500).send({ Error: 'An error has occured on the server' });
       }
@@ -59,9 +59,9 @@ const updateUser = (req, res) => {
     .then((data) => res.send(data))
     .catch((err) => {
       if (err.name === 'CastError') {
-        res.status(ERROR_CODE_400).send({ Error: `${err}` });
+        res.status(ERROR_CODE_400).send({ Error: `${err.message}` });
       } else if (err.name === 'ValidationError') {
-        res.status(ERROR_CODE_400).send({ Error: `${err}` });
+        res.status(ERROR_CODE_400).send({ Error: `${err.message}` });
       } else if (err.statusCode === 404) {
         res.status(ERROR_CODE_404).send({ Error: `${err.message}` });
       } else {
@@ -87,9 +87,9 @@ const updateAvatar = (req, res) => {
     .then((data) => res.send(data))
     .catch((err) => {
       if (err.name === 'CastError') {
-        res.status(ERROR_CODE_400).send({ Error: `${err}` });
+        res.status(ERROR_CODE_400).send({ Error: `${err.message}` });
       } else if (err.name === 'ValidationError') {
-        res.status(ERROR_CODE_400).send({ Error: `${err}` });
+        res.status(ERROR_CODE_400).send({ Error: `${err.message}` });
       } else if (err.statusCode === 404) {
         res.status(ERROR_CODE_404).send({ Error: `${err.message}` });
       } else {

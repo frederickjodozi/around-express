@@ -13,7 +13,7 @@ const getUser = (req, res) => {
     .then((user) => res.send(user))
     .catch((err) => {
       if (err.name === 'CastError') {
-        res.status(ERROR_CODE_400).send({ Error: `${err.name}` });
+        res.status(ERROR_CODE_400).send({ Error: `${err}` });
       } else if (err.statusCode === 404) {
         res.status(ERROR_CODE_404).send({ Error: `${err.message}` });
       } else {
@@ -35,7 +35,7 @@ const createUser = (req, res) => {
     .then((data) => res.send(data))
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        res.status(ERROR_CODE_400).send({ Error: `${err.name}` });
+        res.status(ERROR_CODE_400).send({ Error: `${err}` });
       } else {
         res.status(ERROR_CODE_500).send({ Error: 'An error has occured on the server' });
       }
@@ -43,10 +43,14 @@ const createUser = (req, res) => {
 };
 
 const updateUser = (req, res) => {
-  const userId = req.user._id;
+  const { id } = req.user;
   const { name, about } = req.body;
 
-  User.findByIdAndUpdate(userId, { name, about })
+  User.findByIdAndUpdate(
+    id,
+    { $set: { name, about } },
+    { runValidators: true, new: true },
+  )
     .orFail(() => {
       const error = new Error('No user found with specified Id');
       error.statusCode = 404;
@@ -55,7 +59,9 @@ const updateUser = (req, res) => {
     .then((data) => res.send(data))
     .catch((err) => {
       if (err.name === 'CastError') {
-        res.status(ERROR_CODE_400).send({ Error: `${err.name}` });
+        res.status(ERROR_CODE_400).send({ Error: `${err}` });
+      } else if (err.name === 'ValidationError') {
+        res.status(ERROR_CODE_400).send({ Error: `${err}` });
       } else if (err.statusCode === 404) {
         res.status(ERROR_CODE_404).send({ Error: `${err.message}` });
       } else {
@@ -65,10 +71,14 @@ const updateUser = (req, res) => {
 };
 
 const updateAvatar = (req, res) => {
-  const userId = req.user._id;
+  const { id } = req.user;
   const { avatar } = req.body;
 
-  User.findByIdAndUpdate(userId, { avatar })
+  User.findByIdAndUpdate(
+    id,
+    { $set: { avatar } },
+    { runValidators: true, new: true },
+  )
     .orFail(() => {
       const error = new Error('No user found with specified Id');
       error.statusCode = 404;
@@ -77,7 +87,9 @@ const updateAvatar = (req, res) => {
     .then((data) => res.send(data))
     .catch((err) => {
       if (err.name === 'CastError') {
-        res.status(ERROR_CODE_400).send({ Error: `${err.name}` });
+        res.status(ERROR_CODE_400).send({ Error: `${err}` });
+      } else if (err.name === 'ValidationError') {
+        res.status(ERROR_CODE_400).send({ Error: `${err}` });
       } else if (err.statusCode === 404) {
         res.status(ERROR_CODE_404).send({ Error: `${err.message}` });
       } else {

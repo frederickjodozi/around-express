@@ -11,7 +11,7 @@ app.use(express.json());
 
 app.use((req, res, next) => {
   req.user = {
-    id: '62421a46808351adbb77bb03',
+    _id: '62421a46808351adbb77bb03',
   };
   next();
 });

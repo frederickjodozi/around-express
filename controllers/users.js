@@ -43,11 +43,11 @@ const createUser = (req, res) => {
 };
 
 const updateUser = (req, res) => {
-  const { id } = req.user;
+  const { _id } = req.user;
   const { name, about } = req.body;
 
   User.findByIdAndUpdate(
-    id,
+    _id,
     { $set: { name, about } },
     { runValidators: true, new: true },
   )
@@ -71,11 +71,11 @@ const updateUser = (req, res) => {
 };
 
 const updateAvatar = (req, res) => {
-  const { id } = req.user;
+  const { _id } = req.user;
   const { avatar } = req.body;
 
   User.findByIdAndUpdate(
-    id,
+    _id,
     { $set: { avatar } },
     { runValidators: true, new: true },
   )

@@ -1,8 +1,8 @@
 {
   "name": "around-express",
   "version": "1.0.0",
-  "description": "`/data` — JSON files to temporarily emulate database integration.",
-  "author": "Fred Jodozi",
+  "description": "My sixth project at Practicum and the first one on backend",
+  "author": "Frederick Jodozi",
   "license": "ISC",
   "main": "app.js",
   "scripts": {
@@ -12,22 +12,21 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "express": "^4.17.3",
-    "mongoose": "^6.2.7",
+    "express": "^4.18.1",
+    "mongoose": "^6.5.1",
     "validator": "^13.7.0"
   },
   "devDependencies": {
-    "eslint": "^8.10.0",
+    "eslint": "^8.21.0",
     "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.25.4",
-    "nodemon": "^2.0.15"
+    "eslint-plugin-import": "^2.26.0",
+    "nodemon": "^2.0.19"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Fred776/around-express.git"
+    "url": "https://github.com/frederickjodozi/around-express.git"
   },
-  "homepage": "https://github.com/Fred776/around-express#readme",
   "bugs": {
-    "url": "https://github.com/Fred776/around-express/issues"
+    "url": "https://github.com/frederickjodozi/around-express/issues"
   }
 }

@@ -1,18 +1,6 @@
-# Around the U.S. Back End  
-  
-## Directories  
-  
-`/data` — JSON files to temporarily emulate database integration.  
-  
-`/routes` — routing files.  
-  
-All other directories are optional and may be created by the developer if necessary.   
-  
-## Running the Project  
-  
-`npm run start` — to launch the server.  
-  
-`npm run dev` — to launch the server with the hot reload feature.  
+# around-express
+## My sixth Practicum project
 
+This is my first backend project in the Practicum program. It consists of a simple app connected to a database to create, read, update and delete data. 
 
-
+Since the project as no frontend interface to interact with, it is best used through an api platform like Postman for request and response testing. It will serve as a basis for future full stack projects.

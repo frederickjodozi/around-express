@@ -1,8 +1,8 @@
 {
   "name": "around-express",
   "version": "1.0.0",
-  "description": "My sixth project at Practicum and the first one on backend",
   "author": "Frederick Jodozi",
+  "description": "My first Backend project: An Express.js App to be used for request and response testing",
   "license": "ISC",
   "main": "app.js",
   "scripts": {

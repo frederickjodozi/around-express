@@ -14,7 +14,7 @@ Since the project has no Frontend interface to interact with, it is not hosted o
   
 It can be best used by students beggining their journey in Backend development by being cloned to a local machine and ran in conjunction on Localhost and an Api Platform like Postman.  
   
-It is worthy of note that users will need to install and connect their own databases to the cloned project to make it work.  
+Students should note that they will need to install and connect their own databases to the cloned project to make it work.  
 
   
 **Thanks to TripleTen for helping me build the project!**
